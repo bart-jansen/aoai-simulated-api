@@ -2,14 +2,6 @@ ARG network_type=unrestricted
 ARG TIKTOKEN_CACHE_PATH=/app/tiktoken_cache
 
 FROM python:3.12.1-slim-bullseye AS base
-
-# Install dependencies
-RUN apt-get update \
-    && apt-get install --no-install-recommends -y \
-        gcc \
-        python3-dev \
-    && rm -rf /var/lib/apt/lists/*
-
 WORKDIR /app
 
 FROM base as simulator-unrestricted-network
