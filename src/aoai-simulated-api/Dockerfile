@@ -13,10 +13,8 @@ RUN apt-get update \
 WORKDIR /app
 
 FROM base as simulator-unrestricted-network
-COPY requirements.txt ./
-RUN pip install -r requirements.txt
-
 COPY . .
+RUN pip install .
 
 FROM simulator-unrestricted-network AS simulator-semi-restricted-network
 ARG TIKTOKEN_CACHE_PATH
