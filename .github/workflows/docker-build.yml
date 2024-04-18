@@ -29,8 +29,8 @@ jobs:
     - name: Build and push Docker image
       uses: docker/build-push-action@v3
       with:
-        context: .
-        file: ./src/aoai-simulated-api/Dockerfile
+        context: ./src/aoai-simulated-api
+        file: ./Dockerfile
         push: true
         tags: ghcr.io/${{ github.repository_owner }}/aoai-simulated-api:latest
 
