@@ -62,13 +62,19 @@ def get_simulator(logger: logging.Logger, config: Config) -> FastAPI:
 
     # api-key header for OpenAI
     # ocp-apim-subscription-key header for doc intelligence
+    api_auth_header_scheme = APIKeyHeader(name="Authorization", auto_error=False)
     api_key_header_scheme = APIKeyHeader(name="api-key", auto_error=False)
     ocp_apim_subscription_key_header_scheme = APIKeyHeader(name="ocp-apim-subscription-key", auto_error=False)
 
     def validate_api_key(
+        api_auth_header_key: Annotated[str, Depends(api_auth_header_scheme)],
         api_key: Annotated[str, Depends(api_key_header_scheme)],
         ocp_apim_subscription_key: Annotated[str, Depends(ocp_apim_subscription_key_header_scheme)],
     ):
+        # TODO: check if api_auth header bearer is valid
+        if api_auth_header_key:
+            logger.info("🔑 API Key for TWIN API provided")
+            return True
         if api_key and secrets.compare_digest(api_key, config.simulator_api_key):
             return True
         if ocp_apim_subscription_key and secrets.compare_digest(ocp_apim_subscription_key, config.simulator_api_key):
