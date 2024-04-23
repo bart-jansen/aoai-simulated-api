@@ -72,6 +72,9 @@ def create_openai_limiter(
                     + f"Please retry after {retry_after} seconds.",
                 }
             }
+
+            logger.debug(f"openai_limiter: 🚦 rate limit exceeded for {deployment_name} ({retry_after} seconds)")
+
             return Response(
                 status_code=429,
                 content=json.dumps(content),
@@ -88,6 +91,9 @@ def create_openai_limiter(
                     + f"Please retry after {retry_after} seconds.",
                 }
             }
+
+            logger.debug(f"openai_limiter: 🚦 rate limit exceeded for {deployment_name} ({retry_after} seconds)")
+
             return Response(
                 status_code=429,
                 content=json.dumps(content),
@@ -119,6 +125,9 @@ def create_doc_intelligence_limiter(
                     + f"Please retry after {retry_after} seconds.",
                 }
             }
+
+            logger.debug(f"doc_intelligence_limiter: 🚦 rate limit exceeded ({retry_after} seconds)")
+
             return Response(
                 status_code=429,
                 content=json.dumps(content),
